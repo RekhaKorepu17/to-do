@@ -3,9 +3,12 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:edit, :update, :destroy, :show]
 
   def index
-     @tasks = current_user.tasks.order(created_at: :desc)
+    @tasks_grouped = current_user.tasks
+      .order(created_at: :desc)
+      .group_by { |task| task.created_at.strftime("%B %Y") }
     @task = Task.new
   end
+
 
   def create
     @task = current_user.tasks.build(task_params)
