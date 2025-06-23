@@ -1,0 +1,64 @@
+<div class="container">
+  <h1>My TO-DO List</h1>
+
+  <!-- Add New Task Form -->
+  <div class="form-container">
+    <%= form_with model: @task, local: true, class: "task-form" do |form| %>
+      <div class="form-input-group">
+        <%= form.text_field :title, 
+            placeholder: "Add a new task...", 
+            class: "task-input" %>
+        <% if @task.errors[:title].any? %>
+          <p class="error-message"><%= @task.errors[:title].first %></p>
+        <% end %>
+      </div>
+      <%= form.submit "Add Task", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+
+  <!-- Task List -->
+  <div class="task-list">
+    <% if @tasks.any? %>
+      <% @tasks.each do |task| %>
+        <div class="task-item">
+          <div class="task-content">
+            <!-- Task Title -->
+            <span class="task-title <%= 'completed' if task.completed? %>">
+              <%= task.title %>
+            </span>
+            
+            <!-- Completed Badge -->
+            <% if task.completed? %>
+              <span class="badge completed-badge">Completed</span>
+            <% end %>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="task-actions">
+            <%= link_to "Edit", edit_task_path(task), class: "btn btn-edit" %>
+            <%= button_to "Delete", task_path(task), 
+               method: :delete,
+               data: { confirm: "Are you sure?" },
+               class: "btn btn-delete",
+                form: { style: "display: inline;" } %>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="empty-state">
+        <p>No tasks yet. Add your first task above!</p>
+      </div>
+    <% end %>
+  </div>
+
+  <!-- Task Summary -->
+  <% if @tasks.any? %>
+    <div class="task-summary">
+      <p>
+        Total: <%= @tasks.count %> tasks | 
+        Completed: <%= @tasks.completed.count %> | 
+        Pending: <%= @tasks.pending.count %>
+      </p>
+    </div>
+  <% end %>
+</div>
