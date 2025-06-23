@@ -23,9 +23,10 @@
         <div class="task-item">
           <div class="task-content">
             <!-- Task Title -->
-            <span class="task-title <%= 'completed' if task.completed? %>">
+            <%= link_to task_path(task), class: "task-title #{'completed' if task.completed?}" do %>
               <%= task.title %>
-            </span>
+            <% end %>
+
             
             <!-- Completed Badge -->
             <% if task.completed? %>
