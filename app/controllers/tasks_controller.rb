@@ -1,5 +1,5 @@
 class TasksController < ApplicationController
-  before_action :set_task, only: [:edit, :update, :destroy]
+  before_action :set_task, only: [:edit, :update, :destroy, :show]
 
   def index
     @tasks = Task.all.order(created_at: :desc)
@@ -19,6 +19,11 @@ class TasksController < ApplicationController
 
   def edit
   end
+
+    def show
+      @task = Task.find(params[:id])
+    end
+
 
   def update
     if @task.update(task_params)
