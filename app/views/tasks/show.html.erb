@@ -1,0 +1,27 @@
+<div class="container">
+  <h1>Task Details</h1>
+
+  <div class="task-item">
+    <div class="task-content">
+      <span class="task-title <%= 'completed' if @task.completed %>">
+        <%= @task.title %>
+      </span>
+      <span class="badge <%= @task.completed ? 'completed-badge' : '' %>">
+        <%= @task.completed ? 'Completed' : 'Pending' %>
+      </span>
+    </div>
+
+    <div class="task-actions">
+      <%= link_to 'Edit', edit_task_path(@task), class: 'btn btn-edit' %>
+      <%= link_to 'Delete', task_path(@task), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-delete' %>
+      <%= link_to 'Back to Tasks', tasks_path, class: 'btn btn-primary' %>
+    </div>
+  </div>
+
+  <div class="task-summary">
+    <p>Created At: <%= @task.created_at.strftime('%B %d, %Y at %I:%M %p') %></p>
+    <% if @task.updated_at != @task.created_at %>
+      <p>Last Updated: <%= @task.updated_at.strftime('%B %d, %Y at %I:%M %p') %></p>
+    <% end %>
+  </div>
+</div>
