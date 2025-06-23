@@ -11,6 +11,17 @@
   </head>
 
   <body>
+    <!-- Auth Navigation -->
+    <div style="padding: 15px; text-align: right; background: rgba(255,255,255,0.2); margin: 0 20px;">
+      <% if user_signed_in? %>
+        Hello, <strong><%= current_user.email %></strong> |
+        <%= button_to 'Logout', destroy_user_session_path, method: :delete, form: { style: "display: inline;" } %>
+      <% else %>
+        <%= link_to 'Login', new_user_session_path, class: 'btn btn-primary' %> |
+        <%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary' %>
+      <% end %>
+    </div>
+
     <!-- Flash Messages -->
     <% if notice %>
       <div class="flash-message success">
